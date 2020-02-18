@@ -11,6 +11,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+var dbFileName string
+
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
 	Use:   "serve",
@@ -23,11 +25,19 @@ var serveCmd = &cobra.Command{
 		}
 
 		grpcServer := grpc.NewServer()
-		pb.RegisterKeyValueStoreServer(grpcServer, server.New())
+
+		kvServer, err := server.New(dbFileName)
+		if err != nil {
+			log.Fatalf("failed creating the server: %v", err)
+		}
+
+		pb.RegisterKeyValueStoreServer(grpcServer, kvServer)
 		grpcServer.Serve(lis)
 	},
 }
 
 func init() {
+	serveCmd.Flags().StringVar(&dbFileName, "db-file", "", "Specfiy a db file to read and write to.")
+	serveCmd.MarkFlagRequired("db-file")
 	rootCmd.AddCommand(serveCmd)
 }

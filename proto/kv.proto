@@ -26,3 +26,8 @@ message SetResponse {
   string key = 1;
   string value = 2;
 }
+
+message DataStore {
+  int32 version = 1;
+  map<string, string> data = 2;
+}
