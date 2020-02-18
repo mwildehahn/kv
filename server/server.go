@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 
 	"github.com/golang/protobuf/proto"
@@ -19,6 +20,7 @@ type KeyValueStoreServer struct {
 
 	dbFileName string
 	store      *pb.DataStore
+	mux        sync.Mutex
 }
 
 // Get retrieves a value from the key value store
@@ -34,13 +36,41 @@ func (s *KeyValueStoreServer) Get(ctx context.Context, request *pb.GetRequest) (
 // Set sets a value in the key value store
 func (s *KeyValueStoreServer) Set(ctx context.Context, request *pb.SetRequest) (*pb.SetResponse, error) {
 	s.store.Data[request.Key] = request.Value
+	go func() {
+		err := s.writeToDB()
+		if err != nil {
+			fmt.Printf("failed writing to db on set: %v", err)
+		}
+	}()
 	return &pb.SetResponse{Key: request.Key, Value: request.Value}, nil
 }
 
 // Delete deletes a key from the key value store
 func (s *KeyValueStoreServer) Delete(ctx context.Context, request *pb.DeleteRequest) (*pb.DeleteResponse, error) {
 	delete(s.store.Data, request.Key)
+	go func() {
+		err := s.writeToDB()
+		if err != nil {
+			fmt.Printf("failed writing to db on delete: %v", err)
+		}
+	}()
 	return &pb.DeleteResponse{Key: request.Key}, nil
+}
+
+func (s *KeyValueStoreServer) writeToDB() error {
+	s.mux.Lock()
+
+	out, err := proto.Marshal(s.store)
+	if err != nil {
+		return err
+	}
+
+	if err := ioutil.WriteFile(s.dbFileName, out, 0644); err != nil {
+		return err
+	}
+
+	s.mux.Unlock()
+	return nil
 }
 
 // Shutdown safely shuts down the key value store server
@@ -50,13 +80,9 @@ func (s *KeyValueStoreServer) closeHandler() {
 	go func() {
 		<-c
 
-		out, err := proto.Marshal(s.store)
+		err := s.writeToDB()
 		if err != nil {
-			log.Fatalf("failed serializing data: %v", err)
-		}
-
-		if err := ioutil.WriteFile(s.dbFileName, out, 0644); err != nil {
-			log.Fatalf("failed writing data: %v", err)
+			log.Fatalf("failed writing to db: %v", err)
 		}
 
 		os.Exit(0)
