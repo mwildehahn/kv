@@ -204,6 +204,84 @@ func (m *SetResponse) GetValue() string {
 	return ""
 }
 
+type DeleteRequest struct {
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
+func (m *DeleteRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteRequest) ProtoMessage()    {}
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2216fe83c9c12408, []int{4}
+}
+
+func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeleteRequest.Unmarshal(m, b)
+}
+func (m *DeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeleteRequest.Marshal(b, m, deterministic)
+}
+func (m *DeleteRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteRequest.Merge(m, src)
+}
+func (m *DeleteRequest) XXX_Size() int {
+	return xxx_messageInfo_DeleteRequest.Size(m)
+}
+func (m *DeleteRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteRequest proto.InternalMessageInfo
+
+func (m *DeleteRequest) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
+type DeleteResponse struct {
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
+func (m *DeleteResponse) String() string { return proto.CompactTextString(m) }
+func (*DeleteResponse) ProtoMessage()    {}
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2216fe83c9c12408, []int{5}
+}
+
+func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeleteResponse.Unmarshal(m, b)
+}
+func (m *DeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeleteResponse.Marshal(b, m, deterministic)
+}
+func (m *DeleteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteResponse.Merge(m, src)
+}
+func (m *DeleteResponse) XXX_Size() int {
+	return xxx_messageInfo_DeleteResponse.Size(m)
+}
+func (m *DeleteResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteResponse proto.InternalMessageInfo
+
+func (m *DeleteResponse) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
 type DataStore struct {
 	Version              int32             `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
 	Data                 map[string]string `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -216,7 +294,7 @@ func (m *DataStore) Reset()         { *m = DataStore{} }
 func (m *DataStore) String() string { return proto.CompactTextString(m) }
 func (*DataStore) ProtoMessage()    {}
 func (*DataStore) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2216fe83c9c12408, []int{4}
+	return fileDescriptor_2216fe83c9c12408, []int{6}
 }
 
 func (m *DataStore) XXX_Unmarshal(b []byte) error {
@@ -256,6 +334,8 @@ func init() {
 	proto.RegisterType((*GetResponse)(nil), "kv.GetResponse")
 	proto.RegisterType((*SetRequest)(nil), "kv.SetRequest")
 	proto.RegisterType((*SetResponse)(nil), "kv.SetResponse")
+	proto.RegisterType((*DeleteRequest)(nil), "kv.DeleteRequest")
+	proto.RegisterType((*DeleteResponse)(nil), "kv.DeleteResponse")
 	proto.RegisterType((*DataStore)(nil), "kv.DataStore")
 	proto.RegisterMapType((map[string]string)(nil), "kv.DataStore.DataEntry")
 }
@@ -263,22 +343,25 @@ func init() {
 func init() { proto.RegisterFile("kv.proto", fileDescriptor_2216fe83c9c12408) }
 
 var fileDescriptor_2216fe83c9c12408 = []byte{
-	// 236 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xc8, 0x2e, 0xd3, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0xca, 0x2e, 0x53, 0x92, 0xe3, 0xe2, 0x72, 0x4f, 0x2d, 0x09,
-	0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0x12, 0xe0, 0x62, 0xce, 0x4e, 0xad, 0x94, 0x60, 0x54,
-	0x60, 0xd4, 0xe0, 0x0c, 0x02, 0x31, 0x95, 0x4c, 0xb9, 0xb8, 0xc1, 0xf2, 0xc5, 0x05, 0xf9, 0x79,
-	0xc5, 0xa9, 0x98, 0x0a, 0x84, 0x44, 0xb8, 0x58, 0xcb, 0x12, 0x73, 0x4a, 0x53, 0x25, 0x98, 0xc0,
-	0x62, 0x10, 0x8e, 0x92, 0x09, 0x17, 0x57, 0x30, 0x1e, 0x63, 0x71, 0xe8, 0x32, 0xe5, 0xe2, 0x0e,
-	0x26, 0xc3, 0xb2, 0x6e, 0x46, 0x2e, 0x4e, 0x97, 0xc4, 0x92, 0xc4, 0xe0, 0x92, 0xfc, 0xa2, 0x54,
-	0x21, 0x09, 0x2e, 0xf6, 0xb2, 0xd4, 0xa2, 0xe2, 0xcc, 0xfc, 0x3c, 0xb0, 0x4e, 0xd6, 0x20, 0x18,
-	0x57, 0x48, 0x9b, 0x8b, 0x25, 0x25, 0xb1, 0x24, 0x51, 0x82, 0x49, 0x81, 0x59, 0x83, 0xdb, 0x48,
-	0x5c, 0x2f, 0xbb, 0x4c, 0x0f, 0xae, 0x0d, 0xcc, 0x72, 0xcd, 0x2b, 0x29, 0xaa, 0x0c, 0x02, 0x2b,
-	0x92, 0x32, 0x87, 0x98, 0x09, 0x16, 0x22, 0xd6, 0x25, 0x56, 0x4c, 0x16, 0x8c, 0x46, 0xc9, 0x5c,
-	0xbc, 0xde, 0xa9, 0x95, 0x61, 0x20, 0x3e, 0xc4, 0x41, 0x1a, 0x5c, 0xcc, 0xee, 0xa9, 0x25, 0x42,
-	0x7c, 0x20, 0xfb, 0x10, 0x61, 0x2d, 0xc5, 0x0f, 0xe7, 0x43, 0xbc, 0xab, 0xc4, 0x00, 0x52, 0x19,
-	0x0c, 0x53, 0x19, 0x8c, 0xa6, 0x32, 0x18, 0x59, 0x65, 0x12, 0x1b, 0x38, 0x06, 0x8d, 0x01, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0x8e, 0x46, 0xcf, 0x09, 0xcd, 0x01, 0x00, 0x00,
+	// 274 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x92, 0x41, 0x4b, 0xc3, 0x30,
+	0x14, 0xc7, 0x4d, 0xeb, 0xa6, 0x7b, 0x65, 0x53, 0x83, 0x60, 0xe9, 0x41, 0x66, 0x4e, 0x05, 0xa1,
+	0xe0, 0x74, 0x28, 0x9e, 0x27, 0x3b, 0x78, 0x6b, 0xc0, 0x7b, 0xc4, 0x77, 0x90, 0x8e, 0x66, 0xb6,
+	0x6f, 0x81, 0x7e, 0x06, 0xef, 0x7e, 0x5e, 0x69, 0x42, 0x66, 0x55, 0x2a, 0xb2, 0xdb, 0x7b, 0xff,
+	0xfc, 0xde, 0x7b, 0xf9, 0xbf, 0x04, 0x0e, 0x0b, 0x93, 0xad, 0x2b, 0x4d, 0x9a, 0x07, 0x85, 0x11,
+	0xe7, 0x00, 0x4b, 0xa4, 0x1c, 0xdf, 0x36, 0x58, 0x13, 0x3f, 0x86, 0xb0, 0xc0, 0x26, 0x66, 0x53,
+	0x96, 0x8e, 0xf2, 0x36, 0x14, 0x73, 0x88, 0xec, 0x79, 0xbd, 0xd6, 0x65, 0x8d, 0xbf, 0x01, 0x7e,
+	0x0a, 0x03, 0xa3, 0x56, 0x1b, 0x8c, 0x03, 0xab, 0xb9, 0x44, 0xdc, 0x00, 0xc8, 0x3f, 0xda, 0xf6,
+	0x54, 0xcd, 0x21, 0x92, 0x3b, 0x0c, 0xbb, 0x80, 0xf1, 0x02, 0x57, 0x48, 0xd8, 0x6f, 0x43, 0xc0,
+	0xc4, 0x23, 0x7d, 0xcd, 0xc5, 0x3b, 0x83, 0xd1, 0x42, 0x91, 0x92, 0xa4, 0x2b, 0xe4, 0x31, 0x1c,
+	0x18, 0xac, 0xea, 0x57, 0x5d, 0x5a, 0x66, 0x90, 0xfb, 0x94, 0x5f, 0xc2, 0xfe, 0x8b, 0x22, 0x15,
+	0x07, 0xd3, 0x30, 0x8d, 0x66, 0x67, 0x59, 0x61, 0xb2, 0x6d, 0x99, 0x8d, 0x1e, 0x4a, 0xaa, 0x9a,
+	0xdc, 0x42, 0xc9, 0xad, 0xeb, 0x69, 0xa5, 0xff, 0x1a, 0xba, 0x0f, 0xee, 0xd8, 0xec, 0x83, 0xc1,
+	0xf8, 0x11, 0x9b, 0xa7, 0x56, 0x70, 0x37, 0x4a, 0x21, 0x5c, 0x22, 0xf1, 0x49, 0x3b, 0xf0, 0xeb,
+	0xcd, 0x92, 0xa3, 0x6d, 0xee, 0x9c, 0x89, 0xbd, 0x96, 0x94, 0x9e, 0x94, 0x3f, 0x48, 0xf9, 0x8d,
+	0xbc, 0x82, 0xa1, 0xdb, 0x0b, 0x3f, 0xb1, 0x3e, 0xba, 0x6b, 0x4c, 0x78, 0x57, 0xf2, 0x25, 0xcf,
+	0x43, 0xfb, 0x79, 0xae, 0x3f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x68, 0x03, 0x46, 0x89, 0x48, 0x02,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -297,6 +380,8 @@ type KeyValueStoreClient interface {
 	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 	// Set a value in the key/value store
 	Set(ctx context.Context, in *SetRequest, opts ...grpc.CallOption) (*SetResponse, error)
+	// Delete a key from the store
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 }
 
 type keyValueStoreClient struct {
@@ -325,12 +410,23 @@ func (c *keyValueStoreClient) Set(ctx context.Context, in *SetRequest, opts ...g
 	return out, nil
 }
 
+func (c *keyValueStoreClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+	out := new(DeleteResponse)
+	err := c.cc.Invoke(ctx, "/kv.KeyValueStore/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // KeyValueStoreServer is the server API for KeyValueStore service.
 type KeyValueStoreServer interface {
 	// Retrieve a value from the key/value store
 	Get(context.Context, *GetRequest) (*GetResponse, error)
 	// Set a value in the key/value store
 	Set(context.Context, *SetRequest) (*SetResponse, error)
+	// Delete a key from the store
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 }
 
 // UnimplementedKeyValueStoreServer can be embedded to have forward compatible implementations.
@@ -342,6 +438,9 @@ func (*UnimplementedKeyValueStoreServer) Get(ctx context.Context, req *GetReques
 }
 func (*UnimplementedKeyValueStoreServer) Set(ctx context.Context, req *SetRequest) (*SetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Set not implemented")
+}
+func (*UnimplementedKeyValueStoreServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 
 func RegisterKeyValueStoreServer(s *grpc.Server, srv KeyValueStoreServer) {
@@ -384,6 +483,24 @@ func _KeyValueStore_Set_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _KeyValueStore_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeyValueStoreServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kv.KeyValueStore/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeyValueStoreServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _KeyValueStore_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "kv.KeyValueStore",
 	HandlerType: (*KeyValueStoreServer)(nil),
@@ -395,6 +512,10 @@ var _KeyValueStore_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Set",
 			Handler:    _KeyValueStore_Set_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _KeyValueStore_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

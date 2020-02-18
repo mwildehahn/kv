@@ -37,6 +37,12 @@ func (s *KeyValueStoreServer) Set(ctx context.Context, request *pb.SetRequest) (
 	return &pb.SetResponse{Key: request.Key, Value: request.Value}, nil
 }
 
+// Delete deletes a key from the key value store
+func (s *KeyValueStoreServer) Delete(ctx context.Context, request *pb.DeleteRequest) (*pb.DeleteResponse, error) {
+	delete(s.store.Data, request.Key)
+	return &pb.DeleteResponse{Key: request.Key}, nil
+}
+
 // Shutdown safely shuts down the key value store server
 func (s *KeyValueStoreServer) closeHandler() {
 	c := make(chan os.Signal, 2)

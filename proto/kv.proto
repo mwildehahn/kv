@@ -8,6 +8,9 @@ service KeyValueStore {
 
   // Set a value in the key/value store
   rpc Set(SetRequest) returns (SetResponse) {}
+
+  // Delete a key from the store
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }
 
 message GetRequest { string key = 1; }
@@ -26,6 +29,10 @@ message SetResponse {
   string key = 1;
   string value = 2;
 }
+
+message DeleteRequest { string key = 1; }
+
+message DeleteResponse { string key = 1; }
 
 message DataStore {
   int32 version = 1;
